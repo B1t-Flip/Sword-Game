@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class TipCheck : MonoBehaviour {
   private Rigidbody2D playerRB;
-  private void OnTriggerEnter2D(Collider2D other) {
+  private void OnTriggerStay2D(Collider2D other) {
+    if (PlayerController.stuckToWall) return;
     if(Vector2.Dot(transform.up, Vector2.down) > .75f)
       DownHit(other.gameObject);
     if (ThrowHandle.holding) return;

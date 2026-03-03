@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
   [SerializeField] private ThrowHandle pickup;
   [SerializeField] private LatchHandle latch;
-  private bool stuckToWall;
+  public static bool stuckToWall;
   private Vector2 stuckPosition;
   
   public static Rigidbody2D rb;
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour {
   }
 
   public void PickupEnemy(SpriteRenderer enemySprite) {
-    pickup.PickSomethingUp(StoneType.NORMAL, enemySprite);
+    pickup.PickSomethingUp(enemySprite.GetComponent<StoneRoamer>().type, enemySprite);
     enemySprite.gameObject.SetActive(false);
   }
 }

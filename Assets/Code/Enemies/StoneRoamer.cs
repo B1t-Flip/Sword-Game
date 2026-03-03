@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class StoneRoamer : MonoBehaviour {
   [SerializeField] private float start, end, speed;
+  public StoneType type;
   private Rigidbody2D rb;
   private bool loc;
 

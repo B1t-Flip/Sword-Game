@@ -109,7 +109,9 @@ public class ThrowHandle : MonoBehaviour {
   private void OnLaunch() {
     Vector2 throwDirection = (Vector3)offset - transform.localPosition;
     GameObject instance = Instantiate(rockThrowable);
-    instance.GetComponent<StoneThrowable>().reenable = original;
+    StoneThrowable throwable = instance.GetComponent<StoneThrowable>();
+    throwable.reenable = original;
+    throwable.type = stoneType;
     Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
     rb.linearVelocity = throwDirection * throwPower;
     rb.angularVelocity = Random.Range(-20f, 20f);
