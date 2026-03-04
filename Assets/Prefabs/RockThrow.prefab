@@ -50,6 +50,7 @@ MonoBehaviour:
   reenable: {fileID: 0}
   explosion: {fileID: 8665881515915668260, guid: f99c2a5210e27f44e92b211f96a8157e, type: 3}
   type: 1
+  breakSound: {fileID: 8300000, guid: 2315a9dcb9c002c4cbdda61151d0a752, type: 3}
 --- !u!212 &1430436736719505120
 SpriteRenderer:
   m_ObjectHideFlags: 0

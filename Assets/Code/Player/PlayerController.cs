@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
   [SerializeField, Header("Physics")] private float speed; 
@@ -30,21 +31,26 @@ public class PlayerController : MonoBehaviour {
   #region Input
 
   [SerializeField, Header("Input")] private InputActionReference leftRightInput;
-  [SerializeField] private InputActionReference jumpInput;
+  [SerializeField] private InputActionReference jumpInput, restartInput;
   [SerializeField] private float deadZone;
 
   private void OnEnable() {
     leftRightInput.action.performed += OnLeftRight;
     leftRightInput.action.canceled += OnLeftRight;
     jumpInput.action.canceled += OnJump;
+    restartInput.action.performed += OnRestart;
   }
   
   private void OnDisable() {
     leftRightInput.action.performed -= OnLeftRight;
     leftRightInput.action.canceled -= OnLeftRight;
     jumpInput.action.canceled -= OnJump;
+    restartInput.action.performed -= OnRestart;
   }
 
+  private void OnRestart(InputAction.CallbackContext ctx) {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+  }
   private void OnLeftRight(InputAction.CallbackContext ctx) {
     float val = ctx.ReadValue<float>();
     if (Mathf.Abs(val) < deadZone) dir = 0;
@@ -61,6 +67,8 @@ public class PlayerController : MonoBehaviour {
   private void Start() {
     rb = GetComponent<Rigidbody2D>();
     spr = sprite.GetComponent<SpriteRenderer>();
+    grounded = true;
+    stuckToWall = false;
   }
 
   private void FixedUpdate() {

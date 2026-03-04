@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 [System.Serializable]
@@ -10,6 +11,7 @@ public class ThrowHandle : MonoBehaviour {
   [SerializeField] private Vector2 offset;
   [SerializeField] private float maxDistance, throwPower;
   [SerializeField] private int predictionStepCount;
+  [SerializeField] private AudioResource throwSound;
 
   private Vector2 mouseWorldPos;
   private BoxCollider2D clickBounds;
@@ -56,6 +58,7 @@ public class ThrowHandle : MonoBehaviour {
     prediction.enabled = false;
     rend.enabled = false;
     clickBounds.enabled = false;
+    holding = false;
   }
 
   private GameObject original;
@@ -126,5 +129,6 @@ public class ThrowHandle : MonoBehaviour {
     original = null;
     holding = false;
     PlayerController.i = 0;
+    SoundManager.PlaySound(throwSound);
   }
 }
