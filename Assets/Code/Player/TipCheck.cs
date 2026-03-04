@@ -17,11 +17,13 @@ public class TipCheck : MonoBehaviour {
 
   private void DownHit(GameObject other) {
     switch (other.tag) {
-      case "Ground": 
+      case "Ground":
+        if (other.TryGetComponent(out Wood x)) break;
         PlayerController.instance.Bonk(); 
         SoundManager.PlaySound(bonkSound);
         break;
-      case "Stone": 
+      case "Stone":
+        if (other.TryGetComponent(out Water y)) break;
         PlayerController.instance.PickupEnemy(other.GetComponent<SpriteRenderer>()); 
         SoundManager.PlaySound(stabSound);
         break;
@@ -31,6 +33,7 @@ public class TipCheck : MonoBehaviour {
   private void SideHit(GameObject other, bool side) {
     switch (other.tag) {
       case "Ground": 
+        if (other.TryGetComponent(out Wood x)) break;
         PlayerController.instance.WallStick(); 
         SoundManager.PlaySound(stabSound);
         break;
