@@ -5,11 +5,13 @@ public class PlayerController : MonoBehaviour {
   [SerializeField, Header("Physics")] private float speed; 
   [SerializeField] private float drag, jumpPower, jumpTurn;
   [SerializeField] private Transform sprite;
+  private SpriteRenderer spr;
   private int dir, dirAirborne;
   private float speedAirborne;
 
   [SerializeField] private ThrowHandle pickup;
   [SerializeField] private LatchHandle latch;
+  [SerializeField] private Sprite[] sprites;
   public static bool stuckToWall;
   private Vector2 stuckPosition;
   
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour {
     else Destroy(gameObject);
   }
 
+  public static int i;
+  public static bool flip;
 
   #region Input
 
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour {
   
   private void Start() {
     rb = GetComponent<Rigidbody2D>();
+    spr = sprite.GetComponent<SpriteRenderer>();
   }
 
   private void FixedUpdate() {
@@ -84,6 +89,9 @@ public class PlayerController : MonoBehaviour {
     float turnPoint = (Mathf.Clamp(rb.linearVelocity.y, 
       -jumpTurn, 0)) / jumpTurn;
     turnPoint *= 180 * dirAirborne;
+
+    spr.sprite = sprites[i];
+    spr.flipX = flip;
     
     sprite.eulerAngles = new Vector3(0, 0, Mathf.LerpAngle(sprite.eulerAngles.z, turnPoint, .25f));
   }

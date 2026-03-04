@@ -55,6 +55,10 @@ public class LatchHandle : MonoBehaviour {
       return;
     }
     transform.position = mouseWorldPos;
+    
+    PlayerController.flip = Vector2.Dot(transform.parent.right, (Vector3)offset - transform.localPosition) > 0;
+    PlayerController.i =
+      Mathf.RoundToInt(Mathf.Clamp(Vector2.Distance(transform.localPosition, offset) / maxDistance * 3 - 1, 0, 2));
     if (Vector2.Distance(transform.position, transform.parent.TransformPoint(offset)) > maxDistance)
       transform.position = transform.parent.TransformPoint(offset) + 
                            (transform.position - transform.parent.TransformPoint(offset)).normalized * maxDistance;
@@ -92,5 +96,6 @@ public class LatchHandle : MonoBehaviour {
     player.linearVelocity = throwDirection;
     gameObject.SetActive(false);
     PlayerController.instance.WallUnstick();
+    PlayerController.i = 0;
   }
 }

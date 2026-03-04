@@ -77,6 +77,9 @@ public class ThrowHandle : MonoBehaviour {
     Vector3 returnPos = transform.parent.position + (Vector3)offset;
     transform.position = mouseWorldPos;
     
+    PlayerController.flip = Vector2.Dot(transform.parent.right, (Vector3)offset - transform.localPosition) > 0;
+    PlayerController.i =
+      Mathf.RoundToInt(Mathf.Clamp(Vector2.Distance(transform.position, transform.parent.TransformPoint(offset)) / maxDistance * 3 - 1, 0, 2));
     if (Vector2.Distance(transform.position, returnPos) > maxDistance) 
       transform.localPosition = (Vector3)offset + ((Vector3)mouseWorldPos - returnPos).normalized * maxDistance;
     
@@ -122,5 +125,6 @@ public class ThrowHandle : MonoBehaviour {
     clickBounds.enabled = false;
     original = null;
     holding = false;
+    PlayerController.i = 0;
   }
 }
